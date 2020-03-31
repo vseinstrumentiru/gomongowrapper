@@ -59,6 +59,10 @@ func (wc *WrappedClient) Ping(ctx context.Context, rp *readpref.ReadPref) error 
 	return handle(wc.cc.Ping(ctx, rp))
 }
 
+func (wc *WrappedClient) PingContext(ctx context.Context) error {
+	return wc.Ping(ctx, nil)
+}
+
 func (wc *WrappedClient) StartSession(opts ...*options.SessionOptions) (mongo.Session, error) {
 	ss, err := wc.cc.StartSession(opts...)
 	if err != nil {
