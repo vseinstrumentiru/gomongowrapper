@@ -6,6 +6,7 @@ import (
 
 // Config holds information necessary for connecting to a database.
 type Config struct {
+	URI        string
 	Hosts      []string
 	ReplicaSet *string
 	User       string
