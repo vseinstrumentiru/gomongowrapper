@@ -1,4 +1,4 @@
-package mongodb
+package gomongowrapper
 
 import (
 	"context"
@@ -7,14 +7,14 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-func Connect(ctx context.Context, opts ...*options.ClientOptions) (*WrappedClient, error) {
+func Connect(ctx context.Context, opts ...*options.ClientOptions) (*Client, error) {
 	c, err := tracewrap.Connect(ctx, opts...)
 
 	if err != nil {
 		return nil, handle(err)
 	}
 
-	wc := &WrappedClient{cc: c}
+	wc := &Client{cc: c}
 
 	return wc, err
 }

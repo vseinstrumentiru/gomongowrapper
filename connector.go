@@ -1,11 +1,11 @@
-package mongodb
+package gomongowrapper
 
 import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 // NewConnector returns a new database connector for the application.
-func NewConnector(config Config) (*WrappedClient, error) {
+func NewConnector(config Config) (*Client, error) {
 	opts := options.Client()
 
 	if config.URI != "" {

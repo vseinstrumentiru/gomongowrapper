@@ -1,4 +1,4 @@
-package mongodb
+package gomongowrapper
 
 import (
 	"context"
@@ -9,74 +9,74 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/readpref"
 )
 
-type WrappedClient struct {
+type Client struct {
 	cc *tracewrap.WrappedClient
 }
 
-func NewClient(opts ...*options.ClientOptions) (*WrappedClient, error) {
+func NewClient(opts ...*options.ClientOptions) (*Client, error) {
 	client, err := tracewrap.NewClient(opts...)
 
 	if err != nil {
 		return nil, handle(err)
 	}
 
-	return &WrappedClient{cc: client}, nil
+	return &Client{cc: client}, nil
 }
 
-func (wc *WrappedClient) Connect(ctx context.Context) error {
+func (wc *Client) Connect(ctx context.Context) error {
 	err := wc.cc.Connect(ctx)
 
 	return handle(err)
 }
 
-func (wc *WrappedClient) Database(name string, opts ...*options.DatabaseOptions) *WrappedDatabase {
+func (wc *Client) Database(name string, opts ...*options.DatabaseOptions) *Database {
 	db := wc.cc.Database(name, opts...)
 
 	if db == nil {
 		return nil
 	}
 
-	return &WrappedDatabase{db: db}
+	return &Database{db: db}
 }
 
-func (wc *WrappedClient) Disconnect(ctx context.Context) error {
+func (wc *Client) Disconnect(ctx context.Context) error {
 	return handle(wc.cc.Disconnect(ctx))
 }
 
-func (wc *WrappedClient) ListDatabaseNames(ctx context.Context, filter interface{}, opts ...*options.ListDatabasesOptions) ([]string, error) {
+func (wc *Client) ListDatabaseNames(ctx context.Context, filter interface{}, opts ...*options.ListDatabasesOptions) ([]string, error) {
 	dbs, err := wc.cc.ListDatabaseNames(ctx, filter, opts...)
 
 	return dbs, handle(err)
 }
 
-func (wc *WrappedClient) ListDatabases(ctx context.Context, filter interface{}, opts ...*options.ListDatabasesOptions) (mongo.ListDatabasesResult, error) {
+func (wc *Client) ListDatabases(ctx context.Context, filter interface{}, opts ...*options.ListDatabasesOptions) (mongo.ListDatabasesResult, error) {
 	dbr, err := wc.cc.ListDatabases(ctx, filter, opts...)
 
 	return dbr, handle(err)
 }
 
-func (wc *WrappedClient) Ping(ctx context.Context, rp *readpref.ReadPref) error {
+func (wc *Client) Ping(ctx context.Context, rp *readpref.ReadPref) error {
 	return handle(wc.cc.Ping(ctx, rp))
 }
 
-func (wc *WrappedClient) PingContext(ctx context.Context) error {
+func (wc *Client) PingContext(ctx context.Context) error {
 	return wc.Ping(ctx, nil)
 }
 
-func (wc *WrappedClient) StartSession(opts ...*options.SessionOptions) (mongo.Session, error) {
+func (wc *Client) StartSession(opts ...*options.SessionOptions) (mongo.Session, error) {
 	ss, err := wc.cc.StartSession(opts...)
 	if err != nil {
 		return nil, handle(err)
 	}
-	return &WrappedSession{Session: ss}, nil
+	return &Session{Session: ss}, nil
 }
 
-func (wc *WrappedClient) UseSession(ctx context.Context, fn func(mongo.SessionContext) error) error {
+func (wc *Client) UseSession(ctx context.Context, fn func(mongo.SessionContext) error) error {
 	return handle(wc.cc.UseSession(ctx, fn))
 }
 
-func (wc *WrappedClient) UseSessionWithOptions(ctx context.Context, opts *options.SessionOptions, fn func(mongo.SessionContext) error) error {
+func (wc *Client) UseSessionWithOptions(ctx context.Context, opts *options.SessionOptions, fn func(mongo.SessionContext) error) error {
 	return handle(wc.cc.UseSessionWithOptions(ctx, opts, fn))
 }
 
-func (wc *WrappedClient) Client() *mongo.Client { return wc.cc.Client() }
+func (wc *Client) Client() *mongo.Client { return wc.cc.Client() }

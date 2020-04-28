@@ -1,4 +1,4 @@
-package mongodb
+package gomongowrapper
 
 import (
 	"emperror.dev/errors"

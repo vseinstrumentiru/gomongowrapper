@@ -1,4 +1,4 @@
-package mongodb
+package gomongowrapper
 
 import (
 	tracewrap "github.com/opencensus-integrations/gomongowrapper"

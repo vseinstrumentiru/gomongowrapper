@@ -1,4 +1,4 @@
-package mongodb
+package gomongowrapper
 
 import (
 	"context"
@@ -9,40 +9,40 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-type WrappedSession struct {
+type Session struct {
 	mongo.Session
 }
 
-var _ mongo.Session = (*WrappedSession)(nil)
+var _ mongo.Session = (*Session)(nil)
 
-func (ws *WrappedSession) EndSession(ctx context.Context) {
+func (ws *Session) EndSession(ctx context.Context) {
 	ws.Session.EndSession(ctx)
 }
 
-func (ws *WrappedSession) StartTransaction(topts ...*options.TransactionOptions) error {
+func (ws *Session) StartTransaction(topts ...*options.TransactionOptions) error {
 	return handle(ws.Session.StartTransaction(topts...))
 }
 
-func (ws *WrappedSession) AbortTransaction(ctx context.Context) error {
+func (ws *Session) AbortTransaction(ctx context.Context) error {
 	return handle(ws.Session.AbortTransaction(ctx))
 }
 
-func (ws *WrappedSession) CommitTransaction(ctx context.Context) error {
+func (ws *Session) CommitTransaction(ctx context.Context) error {
 	return handle(ws.Session.CommitTransaction(ctx))
 }
 
-func (ws *WrappedSession) ClusterTime() bson.Raw {
+func (ws *Session) ClusterTime() bson.Raw {
 	return ws.Session.ClusterTime()
 }
 
-func (ws *WrappedSession) AdvanceClusterTime(br bson.Raw) error {
+func (ws *Session) AdvanceClusterTime(br bson.Raw) error {
 	return handle(ws.Session.AdvanceClusterTime(br))
 }
 
-func (ws *WrappedSession) OperationTime() *primitive.Timestamp {
+func (ws *Session) OperationTime() *primitive.Timestamp {
 	return ws.Session.OperationTime()
 }
 
-func (ws *WrappedSession) AdvanceOperationTime(pt *primitive.Timestamp) error {
+func (ws *Session) AdvanceOperationTime(pt *primitive.Timestamp) error {
 	return handle(ws.Session.AdvanceOperationTime(pt))
 }
