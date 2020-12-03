@@ -1,9 +1,17 @@
 package gomongowrapper
 
 import (
+	"time"
+
 	"emperror.dev/errors"
 	"go.mongodb.org/mongo-driver/mongo/readpref"
 )
+
+type ReadPref struct {
+	Mode         readpref.Mode
+	MaxStaleness *time.Duration
+	Tags         []string
+}
 
 // Config holds information necessary for connecting to a database.
 type Config struct {
@@ -13,7 +21,7 @@ type Config struct {
 	User           string
 	Pass           string
 	Name           string
-	ReadPreference *readpref.ReadPref
+	ReadPreference *ReadPref
 
 	Params map[string]string
 }
