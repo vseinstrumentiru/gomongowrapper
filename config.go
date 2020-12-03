@@ -2,16 +2,18 @@ package gomongowrapper
 
 import (
 	"emperror.dev/errors"
+	"go.mongodb.org/mongo-driver/mongo/readpref"
 )
 
 // Config holds information necessary for connecting to a database.
 type Config struct {
-	URI        string
-	Hosts      []string
-	ReplicaSet *string
-	User       string
-	Pass       string
-	Name       string
+	URI            string
+	Hosts          []string
+	ReplicaSet     *string
+	User           string
+	Pass           string
+	Name           string
+	ReadPreference *readpref.ReadPref
 
 	Params map[string]string
 }

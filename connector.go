@@ -21,6 +21,10 @@ func NewConnector(config Config) (*Client, error) {
 		if config.ReplicaSet != nil {
 			opts.ReplicaSet = config.ReplicaSet
 		}
+
+		if config.ReadPreference != nil {
+			opts.ReadPreference = config.ReadPreference
+		}
 	}
 
 	return NewClient(opts)
