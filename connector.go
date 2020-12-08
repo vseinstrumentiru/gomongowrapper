@@ -6,6 +6,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"go.mongodb.org/mongo-driver/mongo/readpref"
 	"go.mongodb.org/mongo-driver/tag"
+	"go.mongodb.org/mongo-driver/x/mongo/driver/auth"
 )
 
 // NewConnector returns a new database connector for the application.
@@ -17,9 +18,10 @@ func NewConnector(config Config) (*Client, error) {
 	} else {
 		opts = opts.SetHosts(config.Hosts).
 			SetAuth(options.Credential{
-				AuthSource: config.Name,
-				Username:   config.User,
-				Password:   config.Pass,
+				AuthMechanism: auth.PLAIN,
+				AuthSource:    config.Name,
+				Username:      config.User,
+				Password:      config.Pass,
 			})
 
 		if config.ReplicaSet != nil {
