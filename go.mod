@@ -1,4 +1,4 @@
-module github.com/lebrains/gomongowrapper
+module github.com/voff4eg/gomongowrapper
 
 go 1.14
 
