@@ -1,4 +1,4 @@
-module github.com/voff4eg/gomongowrapper
+module github.com/vseinstrumentiru/gomongowrapper
 
 go 1.14
 
